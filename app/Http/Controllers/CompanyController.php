@@ -9,6 +9,14 @@ class CompanyController extends Controller
         $index = Company::all();
         return response()->json($index);
     }
+    public function Filter(){
+        $company = Company::all();
+        $filter = $company->filter(function ($value) {
+            return data_get($value, 'name') == 'test7';
+        });
+        $filter = $filter->all();
+        return response()->json($filter);
+    }
     public function store(Request $request)
     {
       $request->validate([

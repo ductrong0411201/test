@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DepartmentController;
-
+use App\Models\Company;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +29,7 @@ Route::post('/user', function (Request $request) {
 });
 Route::apiResource('companies', CompanyController::class);
 Route::apiResource('company/departments',DepartmentController::class);
+Route::get('/company', function() {
+    return (new CompanyController)->Filter();
+}
+);
