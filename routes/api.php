@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
 use App\Models\Company;
 /*
@@ -31,5 +32,8 @@ Route::apiResource('companies', CompanyController::class);
 Route::apiResource('departments',DepartmentController::class);
 Route::get('/company', function() {
     return (new CompanyController)->Filter();
+});
+Route::get('/users-of-department', function() {
+    return (new UserController)->Filter();
 }
 );

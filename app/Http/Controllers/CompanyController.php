@@ -10,12 +10,14 @@ class CompanyController extends Controller
         return response()->json($index);
     }
     public function Filter(){
-        $company = Company::all();
-        $filter = $company->filter(function ($value) {
-            return data_get($value, 'id') > 3 ;
-        });
-        $filter = $filter->all();
-        return response()->json($filter);
+        $company = Company::where('id', '>' , 5)->orderBy('id')->get();
+        return response()->json($company);
+        // $company = Company::all();
+        // $filter = $company->filter(function ($value) {
+        //     return data_get($value, 'id') > 3 ;
+        // });
+        // $filter = $filter->all();
+        // return response()->json($filter);
     }
     public function store(Request $request)
     {
