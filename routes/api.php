@@ -28,7 +28,7 @@ Route::post('/user', function (Request $request) {
     return "ok";
 });
 Route::apiResource('companies', CompanyController::class);
-Route::apiResource('company/departments',DepartmentController::class);
+Route::apiResource('departments',DepartmentController::class);
 Route::get('/company', function() {
     return (new CompanyController)->Filter();
 }

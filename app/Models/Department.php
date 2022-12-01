@@ -19,6 +19,6 @@ class Department extends Model
     }
     public function manager()
     {
-        return $this->hasOne(Users::class, 'manager_id');
+        return $this->hasOne(Users::class, 'id', 'manager_id');
     }
 }

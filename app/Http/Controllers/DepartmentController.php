@@ -31,4 +31,22 @@ class DepartmentController extends Controller
     $show = Department::findOrFail($id);
     return response()->json($show);
     }
+    public function update(Request $request, $id)
+    {
+      $update = Department::findOrFail($id);
+        $request->validate([
+        'name' => 'required|max:255',
+        'company_id' => 'required',
+        ]);
+        $update->name = $request->get('name');
+        $update->company_id = $request->get('company_id');
+        $update->save();
+        return response()->json($update);
+    }
+    public function destroy($id)
+    {
+        $destroy = Department::findOrFail($id);
+        $destroy->delete();
+        return response()->json($destroy::all());
+    }
 }

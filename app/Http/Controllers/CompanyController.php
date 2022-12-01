@@ -12,7 +12,7 @@ class CompanyController extends Controller
     public function Filter(){
         $company = Company::all();
         $filter = $company->filter(function ($value) {
-            return data_get($value, 'name') == 'test7';
+            return data_get($value, 'id') > 3 ;
         });
         $filter = $filter->all();
         return response()->json($filter);

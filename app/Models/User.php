@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     // use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_account','password','email' , 'department_id'];
     public function department()
     {
         return $this->belongsTo(Department::class);
