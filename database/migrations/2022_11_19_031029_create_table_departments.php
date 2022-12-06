@@ -15,12 +15,12 @@ class CreateTableDepartments extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('department_name');
+            $table->string('name');
             $table->integer('company_id');
             $table->timestamps();
             $table->integer('manager_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('manager_id')->references('id')->on('users');
+            // $table->foreign('manager_id')->references('id')->on('users');
         });
     }
 
