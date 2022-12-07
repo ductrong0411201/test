@@ -3,11 +3,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Http\Controllers\Controller;
+use App\Library\QueryBuilder\QueryBuilder;
 class CompanyController extends Controller
 {
-    public function index() {
-        $index = Company::all();
-        return response()->json($index);
+    public function index(Request $request) {
+        // $data = Company::all();
+        $query = Company::query();
+        $query = QueryBuilder::for($query, $request)
+            ->allowedPagination()
+            ->allowedSorts(['name', 'created_at','updated_at'])
+            ->allowedSearch(['name'])
+            ->allowedFilters(['name','address'])
+            ->allowedIncludes(["armyUnits"]);
+        $data = $query->get();
+        return response()->json($data);
+
     }
     public function Filter(){
         $company = Company::where('id', '>' , 5)->orderBy('id')->get();

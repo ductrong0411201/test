@@ -18,8 +18,8 @@ class CreateTableUsers extends Migration
             $table->string('name');
             $table->integer('department_id') -> nullable();
             $table->string('user_account');
-            $table->string(column:'password', length:30);
-            $table->string(column:'email') -> unique();
+            $table->string('password');
+            $table->string('email') -> unique();
             $table->timestamps();
             $table->foreign('department_id')->references('id')->on('departments');
         });
