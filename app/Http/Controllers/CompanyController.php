@@ -7,22 +7,25 @@ use App\Library\QueryBuilder\QueryBuilder;
 use Carbon\Carbon;
 class CompanyController extends Controller
 {
+    public function __construct($date_format = null)
+    {
+        $this->date_format = $date_format;
+    }
     public function index(Request $request) {
-        // $query = Company::query();
-        // $start = Carbon::parse($request->start_date);
-        // $end = Carbon::parse($request->end_date);
-        $data = Company::whereBetween('created_at',[Carbon::now()->startOfDay(),Carbon::now()->endOfDay()])->get();
-        return response()->json($data);
+      if($request->start_date){
+          $start = Carbon::parse($request->start_date)->startOfDay();
+          $end = Carbon::parse($request->end_date)->endOfDay();
+          $data = Company::whereBetween('created_at',[$start,$end])->get();
+          return response()->json($data);
+      } else {
+          $company=Company::all();
+          return response()->json($company);
+      }
     }
     public function Filter(){
-        $company = Company::whereDate('created_at', '2022-10-12')->orderBy('id')->get();
-        return response()->json($company);
-        // $company = Company::all();
-        // $filter = $company->filter(function ($value) {
-        //     return data_get($value, 'id') > 3 ;
-        // });
-        // $filter = $filter->all();
-        // return response()->json($filter);
+      $date_filter = Carbon::now()->startOfDay();
+      $data = Company::whereDate('created_at','>=',$date_filter)->get();
+      return response()->json($data);
     }
     public function store(Request $request)
     {
