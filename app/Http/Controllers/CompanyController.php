@@ -13,19 +13,22 @@ class CompanyController extends Controller
     }
     public function index(Request $request) {
       if($request->start_date){
+        $start = Carbon::parse($request->start_date)->startOfDay();
+        $data = Company::whereDate('created_at','=',$start)->get();
+        return response()->json($data);
+      } else if($request->start_date || $request->end_date) {
           $start = Carbon::parse($request->start_date)->startOfDay();
           $end = Carbon::parse($request->end_date)->endOfDay();
           $data = Company::whereBetween('created_at',[$start,$end])->get();
           return response()->json($data);
-      } else {
-          $company=Company::all();
-          return response()->json($company);
       }
-    }
-    public function Filter(){
-      $date_filter = Carbon::now()->startOfDay();
-      $data = Company::whereDate('created_at','>=',$date_filter)->get();
-      return response()->json($data);
+      if ($request->search) {
+        $search = $request->search;
+        $data = Company::where('name', 'like', "%{$search}%")
+          ->orWhere('address', 'like', "%{$search}%")->get();
+        return response()->json($data);
+      }
+      return response()->json(Company::all());
     }
     public function store(Request $request)
     {

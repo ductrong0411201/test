@@ -18,21 +18,8 @@ use App\Models\Company;
 |
 */
 
-
-Route::post('/user', function (Request $request) {
-    #Validation
-    User::create([
-        "name" => $request->name,
-        "email" => $request->email,
-        "password" => \Hash::make($request->password)
-    ]);
-    return "ok";
-});
 Route::apiResource('companies', CompanyController::class);
 Route::apiResource('departments',DepartmentController::class);
-Route::get('/company', function() {
-    return (new CompanyController)->Filter();
-});
 Route::get('/users-of-department', function() {
     return (new UserController)->Filter();
 }
